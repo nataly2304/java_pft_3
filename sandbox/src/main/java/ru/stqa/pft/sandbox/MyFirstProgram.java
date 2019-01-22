@@ -5,23 +5,19 @@ public class MyFirstProgram {
     String somebody = "world";
     hello(somebody);
 
-    double l = 5;
-    System.out.println("Площадь квадрата со стороной " + l + " равна " + area(l));
+    Square s = new Square(5);
+    System.out.println("Площадь квадрата со стороной " + s.l + " равна " + s.area());
 
-    double a = 5;
-    double b = 6;
-    System.out.println("Площадь прямоугольника со сторонами " + a + " и " + b + " равна " + area(a, b));
+    Rectangle r = new Rectangle(5,6);
+    System.out.println("Площадь прямоугольника со сторонами " + r.a + " и " + r.b + " равна " + r.area());
+
+    Point p1 = new Point(0, 0);
+    Point p2 = new Point(1, 1);
+    System.out.println("Расстояние между двумя точками с координатами (" + p1.x + ", " + p1.y + ") и (" + p2.x + ", " + p2.y + ") равно " + p1.distance(p2));
+
   }
 
   public  static  void  hello(String somebody){
     System.out.println("Hello, " + somebody + "!");
-  }
-
-  public static double area(double l){
-    return l * l;
-  }
-
-  public static double area(double a, double b){
-    return a * b;
   }
 }
