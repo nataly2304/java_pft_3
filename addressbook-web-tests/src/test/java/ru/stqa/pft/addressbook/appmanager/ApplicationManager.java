@@ -1,7 +1,5 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -13,15 +11,6 @@ public class ApplicationManager {
   private GroupHelper groupHelper;
   private NavigationHelper navigationHelper;
   private SessionHelper sessionHelper;
-
-  public static boolean isAlertPresent(WebDriver wd) {
-    try {
-      wd.switchTo().alert();
-      return true;
-    } catch (NoAlertPresentException e) {
-      return false;
-    }
-  }
 
   public void init() {
     System.setProperty("webdriver.chrome.driver", "/Users/Nataly/Documents/Study/JAVA/java_pft_3/addressbook-web-tests/src/test/resources/chromedriver");
