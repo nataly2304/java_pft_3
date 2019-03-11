@@ -48,4 +48,14 @@ public class ContactHelper extends BaseHelper{
   public void deleteSelectedContacts() {
     click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
   }
+
+  public void createContact(ContactData contact){
+    fillContactForm(contact, true);
+    submitContactCreation();
+    returnToHomePage();
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected[]"));
+  }
 }
