@@ -35,7 +35,8 @@ public class ApplicationManager {
     }
 
     wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    wd.get("http://air-natalia/addressbook/index.php");
+    wd.get("http://localhost/addressbook/index.php");
+//    wd.get("http://air-natalia/addressbook/index.php");
     groupHelper = new GroupHelper(wd);
     contactHelper = new ContactHelper(wd);
     navigationHelper = new NavigationHelper(wd);
