@@ -69,6 +69,17 @@ public class ContactHelper extends BaseHelper{
     return contactCount;
   }
 
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<>();
+    List<WebElement> elements = wd.findElements(By.xpath("//td[3]"));
+    for (WebElement element : elements){
+      String firstName = element.getText();
+      ContactData contact = new ContactData(firstName, null, null, null, null);
+      contacts.add(contact);
+    }
+    return contacts;
+  }
+
 //  public List<GroupData> getContactList() {
 //    List<ContactData> contacts = new ArrayList<>();
 //    List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
