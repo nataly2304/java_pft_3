@@ -11,6 +11,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class ContactHelper extends BaseHelper{
 
@@ -70,25 +71,33 @@ public class ContactHelper extends BaseHelper{
   }
 
   public List<ContactData> getContactList() {
+ContactDataMapper contactDataMapper = new ContactDataMapper();
     List<ContactData> contacts = new ArrayList<>();
-    List<WebElement> elements = wd.findElements(By.xpath("//td[3]"));
-    for (WebElement element : elements){
-      String firstName = element.getText();
-      ContactData contact = new ContactData(firstName, null, null, null, null);
-      contacts.add(contact);
+     WebElement table = wd.findElement(By.id("maintable"));
+      List<WebElement> elementsContact = table.findElements(By.name("entry"));//wd.findElements(By.tagName("tr"));
+
+      for (WebElement element : elementsContact){
+        List<WebElement> columnElement = element.findElements(By.tagName("td"));
+
+
+
+        contacts.add(contactDataMapper.apply(columnElement));
     }
     return contacts;
   }
 
-//  public List<GroupData> getContactList() {
-//    List<ContactData> contacts = new ArrayList<>();
-//    List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
-//    for (WebElement element : elements){
-//      String name = element.getText(); //получаем имя группы
-//      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-//      ContactData contact = new ContactData(id, name, null, null);
-//      contacts.add(contact);
-//    }
-//    return contacts;
-//  }
+  private class ContactDataMapper implements Function<List<WebElement>, ContactData>{
+    @Override
+    public ContactData apply(List<WebElement> columnElements) {
+
+      String firstName = columnElements.get(2).getText();
+      String lastName = columnElements.get(1).getText();
+      String homePhone = columnElements.get(5).getText();
+      String email = columnElements.get(4).getText();
+      String address = columnElements.get(3).getText();
+
+
+      return new ContactData(firstName, lastName, homePhone, email, null);
+    }
+  }
 }
