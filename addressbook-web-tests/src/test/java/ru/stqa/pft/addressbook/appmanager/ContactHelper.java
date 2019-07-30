@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class ContactHelper extends BaseHelper{
+public class ContactHelper extends BaseHelper {
 
-  public ContactHelper(WebDriver wd){
+  public ContactHelper(WebDriver wd) {
     super(wd);
   }
 
@@ -24,7 +24,7 @@ public class ContactHelper extends BaseHelper{
     type(By.name("lastname"), contactData.getLastname());
     type(By.name("home"), contactData.getHomePhone());
     type(By.name("email"), contactData.getEmail());
-    if (creation){
+    if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
@@ -55,7 +55,7 @@ public class ContactHelper extends BaseHelper{
     click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
   }
 
-  public void createContact(ContactData contact){
+  public void createContact(ContactData contact) {
     fillContactForm(contact, true);
     submitContactCreation();
     returnToHomePage();
@@ -70,23 +70,43 @@ public class ContactHelper extends BaseHelper{
     return contactCount;
   }
 
+//  public List<ContactData> getContactList() {
+//
+//    List<ContactData> contacts = new ArrayList<>();
+//    WebElement table = wd.findElement(By.id("maintable"));
+//    List<WebElement> elementsContact = table.findElements(By.name("entry"));//wd.findElements(By.tagName("tr"));
+//
+//    for (WebElement element : elementsContact){
+//      List<WebElement> columnElement = element.findElements(By.tagName("td"));
+//
+//      String firstName = columnElement.get(2).getText();
+//      String lastName = columnElement.get(1).getText();
+//      String homePhone = columnElement.get(5).getText();
+//      String email = columnElement.get(4).getText();
+//      String address = columnElement.get(3).getText();
+//
+//      ContactData contact = new ContactData(firstName, lastName, homePhone, email, null);
+//      contacts.add(contact);
+//    }
+//    return contacts;
+//  }
+
   public List<ContactData> getContactList() {
-ContactDataMapper contactDataMapper = new ContactDataMapper();
+    ContactDataMapper contactDataMapper = new ContactDataMapper();
     List<ContactData> contacts = new ArrayList<>();
-     WebElement table = wd.findElement(By.id("maintable"));
-      List<WebElement> elementsContact = table.findElements(By.name("entry"));//wd.findElements(By.tagName("tr"));
+    WebElement table = wd.findElement(By.id("maintable"));
+    List<WebElement> elementsContact = table.findElements(By.name("entry"));//wd.findElements(By.tagName("tr"));
 
-      for (WebElement element : elementsContact){
-        List<WebElement> columnElement = element.findElements(By.tagName("td"));
+    for (WebElement element : elementsContact) {
+      List<WebElement> columnElement = element.findElements(By.tagName("td"));
 
 
-
-        contacts.add(contactDataMapper.apply(columnElement));
+      contacts.add(contactDataMapper.apply(columnElement));
     }
     return contacts;
   }
 
-  private class ContactDataMapper implements Function<List<WebElement>, ContactData>{
+  private class ContactDataMapper implements Function<List<WebElement>, ContactData> {
     @Override
     public ContactData apply(List<WebElement> columnElements) {
 
